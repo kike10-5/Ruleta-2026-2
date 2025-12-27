@@ -178,7 +178,8 @@
         const musicFiles = ["hello.mp3", "bienvenidos.mp3", "tramuntana.mp3", "money.mp3", "you.mp3", "hope_ur_ok.mp3", "let.mp3", "yesterday.mp3", "tengo.mp3", "amaral.mp3", "poder.mp3", "keep.mp3", "chihiro.mp3", "friday.mp3", "we.mp3", "the.mp3", "bring.mp3", "end.mp3"];
 
         const palette = ["#ffc857", "#e9724c", "#c5283d", "#255f85"];
-        let startAngle = 0;
+        // Inicio aleatorio del ángulo para que no siempre empiece igual
+        let startAngle = Math.random() * Math.PI * 2; 
         let arc = Math.PI / (songs.length / 2);
         let spinning = false;
         let audioContext;
@@ -197,22 +198,14 @@
                 ctx.fill();
                 
                 ctx.save();
-                
-                // LÓGICA DE COLOR: Si el fondo es amarillo, letra granate. Si no, letra crema.
                 ctx.fillStyle = (bgColor === "#ffc857") ? "#481d24" : "#fdfaf0";
-                
                 ctx.translate(400, 400);
                 ctx.rotate(angle + arc / 2);
-                
-                // Efecto: De borde a centro
                 ctx.translate(385, 0); 
                 ctx.rotate(Math.PI); 
-                
-                // Tamaño de letra GRANDE (26px)
                 ctx.font = 'italic 26px "IM Fell DW Pica"';
                 ctx.textAlign = "left"; 
                 ctx.fillText(songs[i], 0, 8); 
-                
                 ctx.restore();
             }
         }
@@ -221,9 +214,13 @@
             if (spinning) return;
             if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
             spinning = true;
-            let spinTimeTotal = 5000;
+            
+            // ALEATORIEDAD MEJORADA:
+            // Tiempo de giro variable (4000ms a 7000ms)
+            let spinTimeTotal = 4000 + Math.random() * 3000;
             let currentSpinTime = 0;
-            let spinAngleStart = Math.random() * 10 + 25;
+            // Fuerza de giro inicial muy variable (25 a 75)
+            let spinAngleStart = Math.random() * 50 + 25;
 
             function rotate() {
                 currentSpinTime += 20;
@@ -232,7 +229,8 @@
                     return;
                 }
                 let ratio = currentSpinTime / spinTimeTotal;
-                let easeOut = 1 - Math.pow(1 - ratio, 3); 
+                // Usamos una potencia mayor (pow 4) para un frenado más orgánico y menos predecible
+                let easeOut = 1 - Math.pow(1 - ratio, 4); 
                 let spinAngle = spinAngleStart * (1 - easeOut);
                 startAngle += (spinAngle * Math.PI / 180);
                 drawWheel();
