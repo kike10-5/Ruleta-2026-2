@@ -146,40 +146,37 @@
     </div>
 
     <script>
-        const songs = [
-            "Hello Goodbye", "Bienvenidos al show", "Tramuntana", "Money is everything", 
-            "You're on your own, kid", "hope ur ok", "Let it be", "Yesterday", 
-            "Tengo un pensamiento", "Marta, Sebas, Guille y los demás", "Tengo el poder", "Keep Driving", 
-            "CHIHIRO", "Friday I'm in love", "We pray", "The door", 
-            "Bring me to life", "End of an era"
+        // Objeto base para mantener la relación canción-predicción-audio
+        let data = [
+            { s: "Hello Goodbye", p: "EL 2026 TE OBLIGARÁ A CERRAR UNA PUERTA PARA ABRIR OTRA. DI ADIÓS SIN MIEDO; CADA FINAL ES SOLO UN NUEVO SALUDO.", a: "hello.mp3" },
+            { s: "Bienvenidos al show", p: "SENTIRÁS EL MIEDO Y EL CAOS DE EXPONERTE AL MUNDO, PERO APRENDERÁS QUE TU FRAGILIDAD ES PARTE DEL ESPECTÁCULO.", a: "bienvenidos.mp3" },
+            { s: "Tramuntana", p: "TE ATREVERÁS A BUSCAR UNA VIDA FUERA DE LO COMÚN. SERÁ TU MOMENTO DE ARRIESGARLO TODO Y RENDIRTE A LO QUE TE PIDE EL CUERPO.", a: "tramuntana.mp3" },
+            { s: "Money is everything", p: "EL DINERO NO TE FALTARÁ EN 2026, PERO CUIDADO: NO DEJES QUE LA AMBICIÓN TE VUELVA AGARRADO O ENGURRUÑIDO.", a: "money.mp3" },
+            { s: "You're on your own, kid", p: "ESTARÁS SOLO EN ESTA ETAPA, PERO DESCUBRIRÁS QUE SIEMPRE HAS SIDO TU MEJOR ALIADO.", a: "you.mp3" },
+            { s: "hope ur ok", p: "MIRARÁS HACIA ATRÁS SIN RENCOR, DESEANDO SUERTE A QUIENES YA NO ESTÁN EN TU VIDA.", a: "hope_ur_ok.mp3" },
+            { s: "Let it be", p: "HAY COSAS QUE NO TIENEN SOLUCIÓN; EL 2026 SERÁ EL AÑO DE ACEPTAR EL DESTINO Y DEJARLO SER.", a: "let.mp3" },
+            { s: "Yesterday", p: "LA NOSTALGIA TE VISITARÁ A MENUDO. NO HUYAS DE ELLA, ÚSALA PARA ENTENDERTE.", a: "yesterday.mp3" },
+            { s: "Tengo un pensamiento", p: "TU CABEZA SERÁ UN LABERINTO DE IDEAS. APRENDERÁS A CONVIVIR CON ESE RUIDO SIN QUE TE NUBLE LA VISTA.", a: "tengo.mp3" },
+            { s: "Marta, Sebas, Guille y los demás", p: "TE DARÁS CUENTA DE QUE LO ÚNICO QUE IMPORTA ES CON QUIÉN COMPARTES EL CAMINO. EL 2026 TE UNIRÁ MÁS A TUS AMIGOS REALES.", a: "marta.mp3" },
+            { s: "Tengo el poder", p: "SENTIRÁS UN IMPULSO DE REBELDÍA. POR FIN TOMARÁS LAS RIENDAS DE TU PROPIO CAOS.", a: "poder.mp3" },
+            { s: "Keep Driving", p: "EL MUNDO SE VOLVERÁ LOCO A TU ALREDEDOR, PERO TÚ SEGUIRÁS CONDUCIENDO HACIA TU PAZ.", a: "keep.mp3" },
+            { s: "CHIHIRO", p: "TE SENTIRÁS PERDIDO EN UN LUGAR EXTRAÑO HASTA QUE RECONOZCAS TU PROPIO NOMBRE Y TU ESENCIA.", a: "chihiro.mp3" },
+            { s: "Friday I'm in love", p: "APRENDERÁS A MANDAR EL CAOS A PASEO. SERÁ EL AÑO DE ENCONTRAR TU MOMENTO DE BRILLO CUANDO TODO PARECÍA PERDIDO.", a: "friday.mp3" },
+            { s: "We pray", p: "EN LOS MOMENTOS DE OSCURIDAD, BUSCARÁS UNA CONEXIÓN QUE TE DÉ LAS RESPUESTAS QUE NECESITAS.", a: "we.mp3" },
+            { s: "The door", p: "DEJARÁS DE ROGAR. EN 2026, SIMPLEMENTE LE ENSEÑARÁS LA PUERTA A LO QUE YA NO TIENE SITIO EN TU VIDA.", a: "the.mp3" },
+            { s: "Bring me to life", p: "SALDRÁS DE TU LETARGO. UNA SACUDIDA EMOCIONAL TE HARÁ SENTIRTE VIVO Y DESPIERTO DE NUEVO.", a: "bring.mp3" },
+            { s: "End of an era", p: "ACEPTARÁS QUE ALGO HA MUERTO PARA QUE ALGO NUEVO TENGA ESPACIO PARA NACER. RENOVACIÓN TOTAL.", a: "end.mp3" }
         ];
 
-        const predictions = [
-            "EL 2026 TE OBLIGARÁ A CERRAR UNA PUERTA PARA ABRIR OTRA. DI ADIÓS SIN MIEDO; CADA FINAL ES SOLO UN NUEVO SALUDO.",
-            "SENTIRÁS EL MIEDO Y EL CAOS DE EXPONERTE AL MUNDO, PERO APRENDERÁS QUE TU FRAGILIDAD ES PARTE DEL ESPECTÁCULO.",
-            "TE ATREVERÁS A BUSCAR UNA VIDA FUERA DE LO COMÚN. SERÁ TU MOMENTO DE ARRIESGARLO TODO Y RENDIRTE A LO QUE TE PIDE EL CUERPO.",
-            "EL DINERO NO TE FALTARÁ EN 2026, PERO CUIDADO: NO DEJES QUE LA AMBICIÓN TE VUELVA AGARRADO O ENGURRUÑIDO.",
-            "ESTARÁS SOLO EN ESTA ETAPA, PERO DESCUBRIRÁS QUE SIEMPRE HAS SIDO TU MEJOR ALIADO.",
-            "MIRARÁS HACIA ATRÁS SIN RENCOR, DESEANDO SUERTE A QUIENES YA NO ESTÁN EN TU VIDA.",
-            "HAY COSAS QUE NO TIENEN SOLUCIÓN; EL 2026 SERÁ EL AÑO DE ACEPTAR EL DESTINO Y DEJARLO SER.",
-            "LA NOSTALGIA TE VISITARÁ A MENUDO. NO HUYAS DE ELLA, ÚSALA PARA ENTENDERTE.",
-            "TU CABEZA SERÁ UN LABERINTO DE IDEAS. APRENDERÁS A CONVIVIR CON ESE RUIDO SIN QUE TE NUBLE LA VISTA.",
-            "TE DARÁS CUENTA DE QUE LO ÚNICO QUE IMPORTA ES CON QUIÉN COMPARTES EL CAMINO. EL 2026 TE UNIRÁ MÁS A TUS AMIGOS REALES.",
-            "SENTIRÁS UN IMPULSO DE REBELDÍA. POR FIN TOMARÁS LAS RIENDAS DE TU PROPIO CAOS.",
-            "EL MUNDO SE VOLVERÁ LOCO A TU ALREDEDOR, PERO TÚ SEGUIRÁS CONDUCIENDO HACIA TU PAZ.",
-            "TE SENTIRÁS PERDIDO EN UN LUGAR EXTRAÑO HASTA QUE RECONOZCAS TU PROPIO NOMBRE Y TU ESENCIA.",
-            "APRENDERÁS A MANDAR EL CAOS A PASEO. SERÁ EL AÑO DE ENCONTRAR TU MOMENTO DE BRILLO CUANDO TODO PARECÍA PERDIDO.",
-            "EN LOS MOMENTOS DE OSCURIDAD, BUSCARÁS UNA CONEXIÓN QUE TE DÉ LAS RESPUESTAS QUE NECESITAS.",
-            "DEJARÁS DE ROGAR. EN 2026, SIMPLEMENTE LE ENSEÑARÁS LA PUERTA A LO QUE YA NO TIENE SITIO EN TU VIDA.",
-            "SALDRÁS DE TU LETARGO. UNA SACUDIDA EMOCIONAL TE HARÁ SENTIRTE VIVO Y DESPIERTO DE NUEVO.",
-            "ACEPTARÁS QUE ALGO HA MUERTO PARA QUE ALGO NUEVO TENGA ESPACIO PARA NACER. RENOVACIÓN TOTAL."
-        ];
-
-        const musicFiles = ["hello.mp3", "bienvenidos.mp3", "tramuntana.mp3", "money.mp3", "you.mp3", "hope_ur_ok.mp3", "let.mp3", "yesterday.mp3", "tengo.mp3", "marta.mp3", "poder.mp3", "keep.mp3", "chihiro.mp3", "friday.mp3", "we.mp3", "the.mp3", "bring.mp3", "end.mp3"];
+        // MÁXIMA ALEATORIEDAD: Barajamos el array entero al cargar
+        for (let i = data.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [data[i], data[j]] = [data[j], data[i]];
+        }
 
         const palette = ["#ffc857", "#e9724c", "#c5283d", "#255f85"];
         let startAngle = Math.random() * Math.PI * 2; 
-        let arc = Math.PI / (songs.length / 2);
+        let arc = Math.PI / (data.length / 2);
         let spinning = false;
         let audioContext;
 
@@ -187,7 +184,7 @@
             const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
             ctx.clearRect(0,0,800,800);
-            for(let i=0; i<songs.length; i++) {
+            for(let i=0; i<data.length; i++) {
                 let angle = startAngle + i * arc;
                 let bgColor = palette[i % palette.length];
                 ctx.fillStyle = bgColor;
@@ -204,7 +201,7 @@
                 ctx.rotate(Math.PI); 
                 ctx.font = 'italic 26px "IM Fell DW Pica"';
                 ctx.textAlign = "left"; 
-                ctx.fillText(songs[i], 0, 8); 
+                ctx.fillText(data[i].s, 0, 8); 
                 ctx.restore();
             }
         }
@@ -214,16 +211,13 @@
             if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
             spinning = true;
             
-            // CAOS TOTAL:
-            // 1. Añadimos un número de vueltas gigante y aleatorio (entre 10 y 25 vueltas completas)
-            // 2. Desfasamos el ángulo inicial cada vez
-            let extraVueltas = (Math.floor(Math.random() * 15) + 10) * 360;
+            // Giro con física aleatoria masiva
+            let extraVueltas = (Math.floor(Math.random() * 20) + 15) * 360;
             let randomOffset = Math.random() * 360;
             let totalRotation = extraVueltas + randomOffset;
             
-            let spinTimeTotal = 5000 + (Math.random() * 2000); 
+            let spinTimeTotal = 5000 + (Math.random() * 3000); 
             let currentSpinTime = 0;
-            // Velocidad inicial proporcional a la rotación deseada para que sea fluida
             let spinAngleStart = (totalRotation / (spinTimeTotal / 20)) * 2;
 
             function rotate() {
@@ -233,7 +227,6 @@
                     return;
                 }
                 let ratio = currentSpinTime / spinTimeTotal;
-                // Función de frenado más compleja para ocultar el patrón
                 let easeOut = 1 - Math.pow(1 - ratio, 5); 
                 let spinAngle = spinAngleStart * (1 - easeOut);
                 startAngle += (spinAngle * Math.PI / 180);
@@ -248,18 +241,18 @@
             let degrees = startAngle * 180 / Math.PI + 90;
             let arcd = arc * 180 / Math.PI;
             let index = Math.floor((360 - degrees % 360) / arcd);
-            if (index < 0) index = songs.length + index;
-            let finalIndex = index % songs.length;
+            if (index < 0) index = data.length + index;
+            let finalIndex = index % data.length;
 
-            let audio = new Audio(musicFiles[finalIndex]);
+            let audio = new Audio(data[finalIndex].a);
             audio.play().catch(e => console.log("Audio no encontrado"));
 
             setTimeout(() => {
                 document.getElementById("main-container").style.display = "none";
                 const songDisplay = document.getElementById("songName");
-                songDisplay.innerText = songs[finalIndex];
+                songDisplay.innerText = data[finalIndex].s;
                 songDisplay.style.color = palette[finalIndex % palette.length];
-                document.getElementById("predictionText").innerText = predictions[finalIndex];
+                document.getElementById("predictionText").innerText = data[finalIndex].p;
                 document.getElementById("result-screen").style.display = "flex";
             }, 500);
         }
