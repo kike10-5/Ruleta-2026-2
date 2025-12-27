@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=IM+Fell+DW+Pica:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* He usado el tono Baltic Blue (#255f85) para el fondo para que combine con la paleta */
-            --fondo: #255f85; 
+            /* ROJO FUERTE COMO FONDO PRINCIPAL */
+            --fondo: #c5283d; 
             --crema: #fdfaf0;
         }
 
@@ -39,6 +39,7 @@
             margin-bottom: 20px;
             font-size: 1.2rem;
             padding: 0 10px;
+            color: var(--crema);
         }
 
         #canvasContainer { 
@@ -48,9 +49,9 @@
             max-width: 450px; 
             max-height: 450px;
             cursor: pointer;
-            border: 1px solid var(--crema);
+            border: 2px solid var(--crema);
             border-radius: 50%;
-            box-shadow: 0 0 40px rgba(0,0,0,0.4);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
         canvas { width: 100%; height: 100%; display: block; border-radius: 50%; }
@@ -68,9 +69,9 @@
         }
 
         #spin { 
-            background: transparent; 
-            color: var(--crema); 
-            border: 1px solid var(--crema); 
+            background: var(--crema); 
+            color: var(--fondo); 
+            border: none; 
             padding: 12px 35px; 
             font-size: 14px; 
             margin-top: 30px;
@@ -78,7 +79,7 @@
             font-family: 'Cormorant Garamond', serif;
             text-transform: uppercase;
             letter-spacing: 5px;
-            font-weight: 300;
+            font-weight: bold;
         }
 
         #result-screen { 
@@ -96,22 +97,24 @@
 
         #songName { 
             font-family: 'IM Fell DW Pica', serif; 
-            font-size: 2.5rem; 
+            font-size: 2.8rem; 
             font-style: italic; 
             font-weight: 400;
             margin: 15px 0;
             text-transform: none; 
+            color: var(--crema);
         }
         
         #predictionText { 
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.1rem; 
+            font-size: 1.2rem; 
             margin-top: 20px; 
             max-width: 90%; 
             line-height: 1.4; 
             letter-spacing: 2px;
             text-transform: uppercase;
+            color: var(--crema);
         }
         
         .reset-btn {
@@ -140,7 +143,7 @@
     </div>
 
     <div id="result-screen">
-        <div style="font-size: 10px; letter-spacing: 6px; margin-bottom: 10px; opacity: 0.6; font-weight: 300;">EL MANUSCRITO</div>
+        <div style="font-size: 10px; letter-spacing: 6px; margin-bottom: 10px; opacity: 0.8; font-weight: 300;">EL MANUSCRITO</div>
         <h2 id="songName"></h2>
         <div id="predictionText"></div>
         <button class="reset-btn" onclick="location.reload()">VOLVER A INTENTAR</button>
@@ -169,7 +172,7 @@
             "SENTIRÁS UN IMPULSO DE REBELDÍA. POR FIN TOMARÁS LAS RIENDAS DE TU PROPIO CAOS.",
             "EL MUNDO SE VOLVERÁ LOCO A TU ALREDEDOR, PERO TÚ SEGUIRÁS CONDUCIENDO HACIA TU PAZ.",
             "TE SENTIRÁS PERDIDO EN UN LUGAR EXTRAÑO HASTA QUE RECONOZCAS TU PROPIO NOMBRE Y TU ESENCIA.",
-            "APRENDERÁS A MANDAR EL CAOS A PASEO. SERÁ EL AÑO DE ENCONTRAR TU MOMENTO DE BRILLO CUANDO TODO PARECÍA PERDIDO.",
+            "APRENDERÁS A MANDAR EL CAOS A PASEO. SER EL AÑO DE ENCONTRAR TU MOMENTO DE BRILLO CUANDO TODO PARECÍA PERDIDO.",
             "EN LOS MOMENTOS DE OSCURIDAD, BUSCARÁS UNA CONEXIÓN QUE TE DÉ LAS RESPUESTAS QUE NECESITAS.",
             "DEJARÁS DE ROGAR. EN 2026, SIMPLEMENTE LE ENSEÑARÁS LA PUERTA A LO QUE YA NO TIENE SITIO EN TU VIDA.",
             "SALDRÁS DE TU LETARGO. UNA SACUDIDA EMOCIONAL TE HARÁ SENTIRTE VIVO Y DESPIERTO DE NUEVO.",
@@ -178,7 +181,6 @@
 
         const musicFiles = ["hello.mp3", "bienvenidos.mp3", "tramuntana.mp3", "money.mp3", "you.mp3", "hope_ur_ok.mp3", "let.mp3", "yesterday.mp3", "tengo.mp3", "amaral.mp3", "poder.mp3", "keep.mp3", "chihiro.mp3", "friday.mp3", "we.mp3", "the.mp3", "bring.mp3", "end.mp3"];
 
-        // NUEVA PALETA DE COLORES APLICADA
         const palette = ["#ffc857", "#e9724c", "#c5283d", "#481d24", "#255f85"];
         
         let startAngle = 0;
@@ -203,13 +205,14 @@
                 ctx.translate(400, 400);
                 ctx.rotate(angle + arc / 2);
                 
-                // Alineación: Primera palabra al borde exterior, frase hacia el centro
+                // Texto pegado al borde y más grande
                 ctx.translate(385, 0); 
                 ctx.rotate(Math.PI); 
                 
-                ctx.font = 'italic 16px "IM Fell DW Pica"';
+                // FUENTE MÁS GRANDE (20px)
+                ctx.font = 'italic 20px "IM Fell DW Pica"';
                 ctx.textAlign = "left"; 
-                ctx.fillText(songs[i], 0, 5); 
+                ctx.fillText(songs[i], 0, 7); 
                 
                 ctx.restore();
             }
@@ -248,13 +251,13 @@
             let finalIndex = index % songs.length;
 
             let audio = new Audio(musicFiles[finalIndex]);
-            audio.play().catch(e => console.log("Audio bloqueado o no encontrado"));
+            audio.play().catch(e => console.log("Audio bloqueado"));
 
             setTimeout(() => {
                 document.getElementById("main-container").style.display = "none";
                 const songDisplay = document.getElementById("songName");
                 songDisplay.innerText = songs[finalIndex];
-                songDisplay.style.color = palette[finalIndex % palette.length];
+                songDisplay.style.color = "#fdfaf0"; // Texto en crema sobre el fondo rojo
                 document.getElementById("predictionText").innerText = predictions[finalIndex];
                 document.getElementById("result-screen").style.display = "flex";
             }, 500);
