@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=IM+Fell+DW+Pica:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ROJO FUERTE COMO FONDO PRINCIPAL */
-            --fondo: #c5283d; 
+            /* ROJO MÁS OSCURO (NIGHT BORDEAUX) */
+            --fondo: #481d24; 
             --crema: #fdfaf0;
         }
 
@@ -39,7 +39,6 @@
             margin-bottom: 20px;
             font-size: 1.2rem;
             padding: 0 10px;
-            color: var(--crema);
         }
 
         #canvasContainer { 
@@ -51,7 +50,7 @@
             cursor: pointer;
             border: 2px solid var(--crema);
             border-radius: 50%;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            box-shadow: 0 0 50px rgba(0,0,0,0.6);
         }
 
         canvas { width: 100%; height: 100%; display: block; border-radius: 50%; }
@@ -102,7 +101,6 @@
             font-weight: 400;
             margin: 15px 0;
             text-transform: none; 
-            color: var(--crema);
         }
         
         #predictionText { 
@@ -114,7 +112,6 @@
             line-height: 1.4; 
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--crema);
         }
         
         .reset-btn {
@@ -172,7 +169,7 @@
             "SENTIRÁS UN IMPULSO DE REBELDÍA. POR FIN TOMARÁS LAS RIENDAS DE TU PROPIO CAOS.",
             "EL MUNDO SE VOLVERÁ LOCO A TU ALREDEDOR, PERO TÚ SEGUIRÁS CONDUCIENDO HACIA TU PAZ.",
             "TE SENTIRÁS PERDIDO EN UN LUGAR EXTRAÑO HASTA QUE RECONOZCAS TU PROPIO NOMBRE Y TU ESENCIA.",
-            "APRENDERÁS A MANDAR EL CAOS A PASEO. SER EL AÑO DE ENCONTRAR TU MOMENTO DE BRILLO CUANDO TODO PARECÍA PERDIDO.",
+            "APRENDERÁS A MANDAR EL CAOS A PASEO. SERÁ EL AÑO DE ENCONTRAR TU MOMENTO DE BRILLO CUANDO TODO PARECÍA PERDIDO.",
             "EN LOS MOMENTOS DE OSCURIDAD, BUSCARÁS UNA CONEXIÓN QUE TE DÉ LAS RESPUESTAS QUE NECESITAS.",
             "DEJARÁS DE ROGAR. EN 2026, SIMPLEMENTE LE ENSEÑARÁS LA PUERTA A LO QUE YA NO TIENE SITIO EN TU VIDA.",
             "SALDRÁS DE TU LETARGO. UNA SACUDIDA EMOCIONAL TE HARÁ SENTIRTE VIVO Y DESPIERTO DE NUEVO.",
@@ -205,14 +202,14 @@
                 ctx.translate(400, 400);
                 ctx.rotate(angle + arc / 2);
                 
-                // Texto pegado al borde y más grande
+                // Texto pegado al borde y MÁS GRANDE
                 ctx.translate(385, 0); 
                 ctx.rotate(Math.PI); 
                 
-                // FUENTE MÁS GRANDE (20px)
-                ctx.font = 'italic 20px "IM Fell DW Pica"';
+                // TAMAÑO DE LETRA SUBIDO A 24px
+                ctx.font = 'italic 24px "IM Fell DW Pica"';
                 ctx.textAlign = "left"; 
-                ctx.fillText(songs[i], 0, 7); 
+                ctx.fillText(songs[i], 0, 8); 
                 
                 ctx.restore();
             }
@@ -251,13 +248,13 @@
             let finalIndex = index % songs.length;
 
             let audio = new Audio(musicFiles[finalIndex]);
-            audio.play().catch(e => console.log("Audio bloqueado"));
+            audio.play().catch(e => console.log("Audio no encontrado"));
 
             setTimeout(() => {
                 document.getElementById("main-container").style.display = "none";
                 const songDisplay = document.getElementById("songName");
                 songDisplay.innerText = songs[finalIndex];
-                songDisplay.style.color = "#fdfaf0"; // Texto en crema sobre el fondo rojo
+                songDisplay.style.color = "#fdfaf0";
                 document.getElementById("predictionText").innerText = predictions[finalIndex];
                 document.getElementById("result-screen").style.display = "flex";
             }, 500);
