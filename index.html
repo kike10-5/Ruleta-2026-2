@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=IM+Fell+DW+Pica:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* ROJO MÁS OSCURO (NIGHT BORDEAUX) */
             --fondo: #481d24; 
             --crema: #fdfaf0;
         }
@@ -48,9 +47,9 @@
             max-width: 450px; 
             max-height: 450px;
             cursor: pointer;
-            border: 2px solid var(--crema);
+            border: 1px solid var(--crema);
             border-radius: 50%;
-            box-shadow: 0 0 50px rgba(0,0,0,0.6);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
 
         canvas { width: 100%; height: 100%; display: block; border-radius: 50%; }
@@ -68,9 +67,9 @@
         }
 
         #spin { 
-            background: var(--crema); 
-            color: var(--fondo); 
-            border: none; 
+            background: transparent; 
+            color: var(--crema); 
+            border: 1px solid var(--crema); 
             padding: 12px 35px; 
             font-size: 14px; 
             margin-top: 30px;
@@ -78,7 +77,7 @@
             font-family: 'Cormorant Garamond', serif;
             text-transform: uppercase;
             letter-spacing: 5px;
-            font-weight: bold;
+            font-weight: 300;
         }
 
         #result-screen { 
@@ -96,7 +95,7 @@
 
         #songName { 
             font-family: 'IM Fell DW Pica', serif; 
-            font-size: 2.8rem; 
+            font-size: 2.5rem; 
             font-style: italic; 
             font-weight: 400;
             margin: 15px 0;
@@ -106,7 +105,7 @@
         #predictionText { 
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
             margin-top: 20px; 
             max-width: 90%; 
             line-height: 1.4; 
@@ -140,7 +139,7 @@
     </div>
 
     <div id="result-screen">
-        <div style="font-size: 10px; letter-spacing: 6px; margin-bottom: 10px; opacity: 0.8; font-weight: 300;">EL MANUSCRITO</div>
+        <div style="font-size: 10px; letter-spacing: 6px; margin-bottom: 10px; opacity: 0.6; font-weight: 300;">EL MANUSCRITO</div>
         <h2 id="songName"></h2>
         <div id="predictionText"></div>
         <button class="reset-btn" onclick="location.reload()">VOLVER A INTENTAR</button>
@@ -178,8 +177,7 @@
 
         const musicFiles = ["hello.mp3", "bienvenidos.mp3", "tramuntana.mp3", "money.mp3", "you.mp3", "hope_ur_ok.mp3", "let.mp3", "yesterday.mp3", "tengo.mp3", "amaral.mp3", "poder.mp3", "keep.mp3", "chihiro.mp3", "friday.mp3", "we.mp3", "the.mp3", "bring.mp3", "end.mp3"];
 
-        const palette = ["#ffc857", "#e9724c", "#c5283d", "#481d24", "#255f85"];
-        
+        const palette = ["#ffc857", "#e9724c", "#c5283d", "#255f85"];
         let startAngle = 0;
         let arc = Math.PI / (songs.length / 2);
         let spinning = false;
@@ -191,23 +189,27 @@
             ctx.clearRect(0,0,800,800);
             for(let i=0; i<songs.length; i++) {
                 let angle = startAngle + i * arc;
-                ctx.fillStyle = palette[i % palette.length];
+                let bgColor = palette[i % palette.length];
+                ctx.fillStyle = bgColor;
                 ctx.beginPath();
                 ctx.arc(400, 400, 400, angle, angle + arc, false);
                 ctx.lineTo(400, 400);
                 ctx.fill();
                 
                 ctx.save();
-                ctx.fillStyle = "#fdfaf0";
+                
+                // LÓGICA DE COLOR: Si el fondo es amarillo, letra granate. Si no, letra crema.
+                ctx.fillStyle = (bgColor === "#ffc857") ? "#481d24" : "#fdfaf0";
+                
                 ctx.translate(400, 400);
                 ctx.rotate(angle + arc / 2);
                 
-                // Texto pegado al borde y MÁS GRANDE
+                // Efecto: De borde a centro
                 ctx.translate(385, 0); 
                 ctx.rotate(Math.PI); 
                 
-                // TAMAÑO DE LETRA SUBIDO A 24px
-                ctx.font = 'italic 24px "IM Fell DW Pica"';
+                // Tamaño de letra GRANDE (26px)
+                ctx.font = 'italic 26px "IM Fell DW Pica"';
                 ctx.textAlign = "left"; 
                 ctx.fillText(songs[i], 0, 8); 
                 
@@ -254,7 +256,7 @@
                 document.getElementById("main-container").style.display = "none";
                 const songDisplay = document.getElementById("songName");
                 songDisplay.innerText = songs[finalIndex];
-                songDisplay.style.color = "#fdfaf0";
+                songDisplay.style.color = palette[finalIndex % palette.length];
                 document.getElementById("predictionText").innerText = predictions[finalIndex];
                 document.getElementById("result-screen").style.display = "flex";
             }, 500);
